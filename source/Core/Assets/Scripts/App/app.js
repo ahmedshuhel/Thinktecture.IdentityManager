@@ -94,6 +94,25 @@
                     throw (response.data && response.data.message || "Error Creating User");
                 });
         };
+
+        this.blockUser = function(subject) {
+            return $http.post("api/users/block", { subject: subject })
+                .then(function(response) {
+                    return;
+                }, function(response) {
+                    throw (response.data && response.data.message || "Error Blocking User");
+                });
+        };
+
+        this.unblockUser = function (subject) {
+            return $http.post("api/users/unblock", { subject: subject })
+                .then(function (response) {
+                    return;
+                }, function (response) {
+                    throw (response.data && response.data.message || "Error Blocking User");
+                });
+        };
+        
         this.setPassword = function (subject, password) {
             return $http.post("api/password", { subject: subject, password: password })
                 .then(function () {

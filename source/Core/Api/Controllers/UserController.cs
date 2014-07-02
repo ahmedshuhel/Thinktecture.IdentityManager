@@ -178,7 +178,57 @@ namespace Thinktecture.IdentityManager.Api.Models.Controllers
 
             return BadRequest(ModelState.GetErrorMessage());
         }
-        
+
+
+        public async Task<IHttpActionResult> BlockUser(BlockUser model)
+        {
+
+            if (model == null)
+                ModelState.AddModelError("", "Data required");
+
+            if (ModelState.IsValid)
+            {
+                var result = await userManager.BlockUserAsync(model.Subject);
+                if (result.IsSuccess)
+                {
+                    return Ok(UserManagerResult.Success);
+                }
+
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            return BadRequest(ModelState.GetErrorMessage());
+        }
+
+        public async Task<IHttpActionResult> UnblockUser(UnblockUser model)
+        {
+
+            if (model == null)
+                ModelState.AddModelError("", "Data required");
+
+            if (ModelState.IsValid)
+            {
+                var result = await userManager.UnblockUserAsync(model.Subject);
+                if (result.IsSuccess)
+                {
+                    return Ok(UserManagerResult.Success);
+                }
+
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            return BadRequest(ModelState.GetErrorMessage());
+        }
+
+
         [Route("claims/add")]
         [HttpPost]
         public async Task<IHttpActionResult> AddClaim(Claim model)

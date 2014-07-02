@@ -271,5 +271,16 @@ namespace Thinktecture.IdentityManager.MembershipReboot
 
             return Task.FromResult(UserManagerResult.Success);
         }
+
+        public Task<UserManagerResult> BlockUserAsync(string subject)
+        {
+            
+            throw new NotImplementedException();
+        }
+
+        public Task<UserManagerResult> UnblockUserAsync(string subject)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

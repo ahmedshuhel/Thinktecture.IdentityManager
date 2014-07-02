@@ -101,8 +101,14 @@
 
     <div class="row section">
         <form name="deleteUserForm" class="form-inline" ng-submit="deleteUser(model.user.subject)">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <button type="submit" class="btn btn-primary">Delete User</button>
+            </div>
+        </form>
+        
+        <form name="deleteUserForm" class="form-inline" ng-submit="chaneLockedStatus(model.user.subject)">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-primary">{{ model.user.IsLocked ? "Unblock" : "Block" }}</button>
             </div>
         </form>
     </div>

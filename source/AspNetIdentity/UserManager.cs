@@ -280,10 +280,39 @@ namespace Thinktecture.IdentityManager.AspNetIdentity
         public async Task<UserManagerResult> DeleteClaimAsync(string subject, string type, string value)
         {
             TKey key = ConvertSubjectToKey(subject);
-            var result = await this.userManager.RemoveClaimAsync(key, new System.Security.Claims.Claim(type, value));
+            var result = await userManager.RemoveClaimAsync(key, new System.Security.Claims.Claim(type, value));
             if (!result.Succeeded)
             {
                 return new UserManagerResult<CreateResult>(result.Errors.ToArray());
+            }
+
+            return UserManagerResult.Success;
+        }
+
+        public async Task<UserManagerResult> BlockUserAsync(string subject)
+        {
+            TKey key = ConvertSubjectToKey(subject);
+
+            IdentityResult identityResult = await userManager.SetLockoutEnabledAsync(key, true);
+
+            if (!identityResult.Succeeded)
+            {
+                return new UserManagerResult(identityResult.Errors.ToArray());
+            }
+
+            return UserManagerResult.Success;
+        }
+
+
+        public async Task<UserManagerResult> UnblockUserAsync(string subject)
+        {
+            TKey key = ConvertSubjectToKey(subject);
+
+            IdentityResult identityResult = await userManager.SetLockoutEnabledAsync(key, false);
+
+            if (!identityResult.Succeeded)
+            {
+                return new UserManagerResult(identityResult.Errors.ToArray());
             }
 
             return UserManagerResult.Success;
